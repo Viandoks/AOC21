@@ -1,0 +1,52 @@
+<form id="form">
+    <textarea name="input" id="input" cols="30" rows="10"></textarea>
+    <input type="submit" value="submit">
+</form>
+<div id="answer"></div>
+
+<script>
+    const form = document.getElementById("form"),
+        input = document.getElementById('input'),
+        answer = document.getElementById('answer');
+
+    const orders = {
+        "forward": (x) => {
+            console.log("forward", x)
+            coordinates["x"] += x;
+            coordinates["y"] += x*coordinates['aim'];
+        },
+        "down": (y) => {
+            console.log("down", y)
+            // coordinates["y"] += y;
+            coordinates["aim"] += y;
+        },
+        "up": (y) => {
+            console.log("up", y)
+            // coordinates["y"] -= y;
+            coordinates["aim"] -= y;
+        }
+    }
+
+    let coordinates = {
+        x: 0,
+        y: 0,
+        aim: 0
+    };
+
+    form.addEventListener("submit", (e) => {
+
+        e.preventDefault();
+
+        coordinates = {
+            x: 0,
+            y: 0,
+            aim: 0
+        };
+
+        input.value.split('\n')
+            .map(action => action.split(" "))
+            .map(action => orders[action[0]](parseInt(action[1])));
+
+        answer.innerHTML = coordinates["x"]*coordinates["y"];
+    })
+</script>
