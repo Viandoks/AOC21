@@ -1,0 +1,18 @@
+<form id="form">
+    <textarea name="input" id="input" cols="30" rows="10"></textarea>
+    <input type="submit" value="submit">
+</form>
+<div id="answer"></div>
+<script>
+    const form = document.getElementById("form"),
+        input = document.getElementById('input'),
+        answer = document.getElementById('answer');
+
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const lines = input.value.split('\n');
+        const result1 = lines.filter((line, index) => parseInt(line) > parseInt(lines[index-1])).length;
+        const result2 = lines.filter((line, index) => parseInt(line) > parseInt(lines[index-3])).length;
+        answer.innerHTML = result1+' - '+result2;
+    });
+</script>
